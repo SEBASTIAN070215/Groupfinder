@@ -42,8 +42,8 @@ $result = mysqli_query($conn, $query);
 
         <form action="" method="GET" class="mb-6 flex gap-2">
             <input type="text" name="cari" value="<?= htmlspecialchars($cari); ?>"
-                   class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                   placeholder="Cari mata kuliah...">
+                class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                placeholder="Cari mata kuliah...">
             <button type="submit" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 text-sm">Cari</button>
         </form>
 
