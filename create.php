@@ -30,9 +30,8 @@ if (isset($_POST['submit'])) {
         $kriteria_esc    = mysqli_real_escape_string($conn, $kriteria);
 
         // Query simpan ke database MySQL
-        $query = "INSERT INTO groups (user_id, nama_matkul, kuota_dibutuhkan, deskripsi, kriteria) 
-                  VALUES ('$user_id_esc', '$nama_matkul_esc', '$kuota_esc', '$deskripsi_esc', '$kriteria_esc')";
-                  
+        $query = "INSERT INTO study_groups (user_id, nama_matkul, kuota_dibutuhkan, deskripsi, kriteria) VALUES ('$user_id_esc', '$nama_matkul_esc', '$kuota_esc', '$deskripsi_esc', '$kriteria_esc')";
+
         if (mysqli_query($conn, $query)) {
             echo "<script>alert('Lowongan berhasil diposting!'); window.location='index.php';</script>";
             exit();

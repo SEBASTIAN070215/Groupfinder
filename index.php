@@ -15,9 +15,9 @@ $cari = isset($_GET['cari']) ? trim($_GET['cari']) : "";
 
 if ($cari !== "") {
     $cari_esc = mysqli_real_escape_string($conn, $cari);
-    $query = "SELECT * FROM groups WHERE nama_matkul LIKE '%$cari_esc%' ORDER BY id DESC";
+    $query = "SELECT * FROM study_groups WHERE nama_matkul LIKE '%$cari_esc%' ORDER BY id DESC";
 } else {
-    $query = "SELECT * FROM groups ORDER BY id DESC";
+    $query = "SELECT * FROM study_groups ORDER BY id DESC";
 }
 
 $result = mysqli_query($conn, $query);
