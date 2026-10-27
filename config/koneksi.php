@@ -5,7 +5,6 @@ $user = "root";
 $pass = "";
 $db   = "groupfinder";
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
     $koneksi = new mysqli($host, $user, $pass, $db);
