@@ -1,6 +1,8 @@
 <?php
 // koneksi.php menyediakan $conn dan memulai session
-require_once 'koneksi.php';
+require_once 'config/koneksi.php';
+
+session_start();
 
 // Cek login, sama seperti create.php (session dari login.php)
 if (!isset($_SESSION['user_id'])) {
@@ -14,13 +16,13 @@ $user_id = $_SESSION['user_id'];
 $cari = isset($_GET['cari']) ? trim($_GET['cari']) : "";
 
 if ($cari !== "") {
-    $cari_esc = mysqli_real_escape_string($conn, $cari);
+    $cari_esc = mysqli_real_escape_string($koneksi, $cari);
     $query = "SELECT * FROM study_groups WHERE nama_matkul LIKE '%$cari_esc%' ORDER BY id DESC";
 } else {
     $query = "SELECT * FROM study_groups ORDER BY id DESC";
 }
 
-$result = mysqli_query($conn, $query);
+$result = mysqli_query($koneksi, $query);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -56,7 +58,7 @@ $result = mysqli_query($conn, $query);
                                 <?= htmlspecialchars($row['nama_matkul']); ?>
                             </h2>
                             <span class="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full whitespace-nowrap">
-                                Butuh <?= (int)$row['kuota_dibutuhkan']; ?> orang
+                                Butuh <?= (int)$row['jumlah_anggota']; ?> orang
                             </span>
                         </div>
 
@@ -66,7 +68,7 @@ $result = mysqli_query($conn, $query);
 
                         <div class="text-sm mb-4">
                             <span class="font-medium text-gray-700">Kriteria:</span>
-                            <span class="text-gray-600"><?= htmlspecialchars($row['kriteria']); ?></span>
+                            <span class="text-gray-600"><?= htmlspecialchars($row['syarat_kriteria']); ?></span>
                         </div>
 
                         <?php if ($row['user_id'] == $user_id): ?>

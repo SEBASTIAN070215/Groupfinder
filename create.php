@@ -1,6 +1,8 @@
 <?php
 // Memulai session dan menghubungkan ke database buatan Derryl
-require_once 'koneksi.php';
+require_once 'config/koneksi.php';
+
+session_start();
 
 // Cek apakah mahasiswa sudah login (session dari halaman login Panji)
 if (!isset($_SESSION['user_id'])) {
@@ -23,20 +25,20 @@ if (isset($_POST['submit'])) {
         $error = "Semua kolom wajib diisi!";
     } else {
         // Amankan data dari SQL injection
-        $user_id_esc     = mysqli_real_escape_string($conn, $user_id);
-        $nama_matkul_esc = mysqli_real_escape_string($conn, $nama_matkul);
-        $kuota_esc       = mysqli_real_escape_string($conn, $kuota);
-        $deskripsi_esc   = mysqli_real_escape_string($conn, $deskripsi);
-        $kriteria_esc    = mysqli_real_escape_string($conn, $kriteria);
+        $user_id_esc     = mysqli_real_escape_string($koneksi, $user_id);
+        $nama_matkul_esc = mysqli_real_escape_string($koneksi, $nama_matkul);
+        $kuota_esc       = mysqli_real_escape_string($koneksi, $kuota);
+        $deskripsi_esc   = mysqli_real_escape_string($koneksi, $deskripsi);
+        $kriteria_esc    = mysqli_real_escape_string($koneksi, $kriteria);
 
         // Query simpan ke database MySQL
-        $query = "INSERT INTO study_groups (user_id, nama_matkul, kuota_dibutuhkan, deskripsi, kriteria) VALUES ('$user_id_esc', '$nama_matkul_esc', '$kuota_esc', '$deskripsi_esc', '$kriteria_esc')";
+        $query = "INSERT INTO study_groups (user_id, nama_matkul, jumlah_anggota, deskripsi, syarat_kriteria) VALUES ('$user_id_esc', '$nama_matkul_esc', '$kuota_esc', '$deskripsi_esc', '$kriteria_esc')";
 
-        if (mysqli_query($conn, $query)) {
+        if (mysqli_query($koneksi, $query)) {
             echo "<script>alert('Lowongan berhasil diposting!'); window.location='index.php';</script>";
             exit();
         } else {
-            $error = "Gagal memposting lowongan: " . mysqli_error($conn);
+            $error = "Gagal memposting lowongan: " . mysqli_error($koneksi);
         }
     }
 }

@@ -1,6 +1,8 @@
 <?php
 // Memulai session dan menyambungkan ke database
-require_once 'koneksi.php';
+require_once 'config/koneksi.php';
+
+session_start();
 
 // Cek autentikasi user
 if (!isset($_SESSION['user_id'])) {
@@ -14,7 +16,7 @@ $error = "";
 
 // Ambil data lowongan yang sesuai dengan ID dan milik user yang sedang login
 $query_select = "SELECT * FROM groups WHERE id = '$id' AND user_id = '$user_id'";
-$result = mysqli_query($conn, $query_select);
+$result = mysqli_query($koneksi, $query_select);
 
 if (mysqli_num_rows($result) === 0) {
     header("Location: index.php");
@@ -33,10 +35,10 @@ if (isset($_POST['submit'])) {
     if (empty($nama_matkul) || empty($kuota) || empty($deskripsi) || empty($kriteria)) {
         $error = "Semua kolom wajib diisi!";
     } else {
-        $nama_matkul_esc = mysqli_real_escape_string($conn, $nama_matkul);
-        $kuota_esc       = mysqli_real_escape_string($conn, $kuota);
-        $deskripsi_esc   = mysqli_real_escape_string($conn, $deskripsi);
-        $kriteria_esc    = mysqli_real_escape_string($conn, $kriteria);
+        $nama_matkul_esc = mysqli_real_escape_string($koneksi, $nama_matkul);
+        $kuota_esc       = mysqli_real_escape_string($koneksi, $kuota);
+        $deskripsi_esc   = mysqli_real_escape_string($koneksi, $deskripsi);
+        $kriteria_esc    = mysqli_real_escape_string($koneksi, $kriteria);
 
         $query_update = "UPDATE groups SET 
                             nama_matkul = '$nama_matkul_esc',
@@ -45,11 +47,11 @@ if (isset($_POST['submit'])) {
                             kriteria = '$kriteria_esc'
                          WHERE id = '$id' AND user_id = '$user_id'";
 
-        if (mysqli_query($conn, $query_update)) {
+        if (mysqli_query($koneksi, $query_update)) {
             echo "<script>alert('Lowongan berhasil diperbarui!'); window.location='index.php';</script>";
             exit();
         } else {
-            $error = "Gagal memperbarui lowongan: " . mysqli_error($conn);
+            $error = "Gagal memperbarui lowongan: " . mysqli_error($koneksi);
         }
     }
 }

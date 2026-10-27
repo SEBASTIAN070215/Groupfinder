@@ -1,14 +1,14 @@
 <?php
 session_start();
-include 'config/koneksi.php'; // Sesuaikan jalur folder koneksi jika berbeda
+require_once 'config/koneksi.php'; // Sesuaikan jalur folder koneksi jika berbeda
 
 $error = "";
 
 if (isset($_POST['login'])) {
-    $nim = mysqli_real_escape_string($conn, $_POST['nim']);
+    $nim = mysqli_real_escape_string($koneksi, $_POST['nim']);
     
     // Cek apakah NIM terdaftar di database
-    $result = mysqli_query($conn, "SELECT * FROM users WHERE nim = '$nim'");
+    $result = mysqli_query($koneksi, "SELECT * FROM users WHERE nim = '$nim'");
     
     if (mysqli_num_rows($result) === 1) {
         $row = mysqli_fetch_assoc($result);

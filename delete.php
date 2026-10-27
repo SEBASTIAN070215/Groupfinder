@@ -1,6 +1,8 @@
 <?php
 // Memulai session dan menyambungkan ke database
-require_once 'koneksi.php';
+require_once 'config/koneksi.php';
+
+session_start();
 
 // Cek autentikasi user
 if (!isset($_SESSION['user_id'])) {
@@ -15,7 +17,7 @@ if (isset($_GET['id'])) {
     // Hapus data hanya jika ID sesuai dan merupakan milik user yang login
     $query = "DELETE FROM groups WHERE id = '$id' AND user_id = '$user_id'";
 
-    if (mysqli_query($conn, $query)) {
+    if (mysqli_query($koneksi, $query)) {
         echo "<script>alert('Lowongan berhasil dihapus!'); window.location='index.php';</script>";
         exit();
     } else {

@@ -1,22 +1,22 @@
 <?php
 session_start();
-include 'config/koneksi.php'; // Sesuaikan jalur folder koneksi jika berbeda
+require_once 'config/koneksi.php'; // Sesuaikan jalur folder koneksi jika berbeda
 
 $pesan = "";
 $error = "";
 
 if (isset($_POST['register'])) {
-    $nim = mysqli_real_escape_string($conn, $_POST['nim']);
-    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
+    $nim = mysqli_real_escape_string($koneksi, $_POST['nim']);
+    $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
 
     // Cek apakah NIM sudah pernah didaftarkan sebelumnya
-    $cek_nim = mysqli_query($conn, "SELECT * FROM users WHERE nim = '$nim'");
+    $cek_nim = mysqli_query($koneksi, "SELECT * FROM users WHERE nim = '$nim'");
     if (mysqli_num_rows($cek_nim) > 0) {
         $error = "NIM tersebut sudah terdaftar! Silakan langsung login.";
     } else {
         // Masukkan data mahasiswa baru ke database
         $query = "INSERT INTO users (nim, nama) VALUES ('$nim', '$nama')";
-        if (mysqli_query($conn, $query)) {
+        if (mysqli_query($koneksi, $query)) {
             $pesan = "Registrasi berhasil! Silakan login.";
         } else {
             $error = "Terjadi kesalahan, coba lagi.";
