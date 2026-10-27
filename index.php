@@ -1,8 +1,10 @@
 <?php
+
+session_start();
+
 // koneksi.php menyediakan $conn dan memulai session
 require_once 'config/koneksi.php';
 
-session_start();
 
 // Cek login, sama seperti create.php (session dari login.php)
 if (!isset($_SESSION['user_id'])) {
@@ -35,12 +37,20 @@ $result = mysqli_query($koneksi, $query);
 <body class="bg-gray-100 min-h-screen p-4">
 
     <div class="max-w-5xl mx-auto">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Lowongan Kelompok</h1>
-            <a href="create.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium shadow-sm">
-                + Buat Lowongan
-            </a>
-        </div>
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-800">Lowongan Kelompok</h1>
+        <p class="text-sm text-gray-500">Halo, <?= htmlspecialchars($_SESSION['nama']); ?></p>
+    </div>
+    <div class="flex gap-2">
+        <a href="create.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium shadow-sm">
+            + Buat Lowongan
+        </a>
+        <a href="logout.php" onclick="return confirm('Yakin ingin keluar?');" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 text-sm font-medium shadow-sm">
+            Logout
+        </a>
+    </div>
+</div>
 
         <form action="" method="GET" class="mb-6 flex gap-2">
             <input type="text" name="cari" value="<?= htmlspecialchars($cari); ?>"

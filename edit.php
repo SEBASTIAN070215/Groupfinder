@@ -1,8 +1,9 @@
 <?php
-// Memulai session dan menyambungkan ke database
-require_once 'config/koneksi.php';
 
 session_start();
+
+// Memulai session dan menyambungkan ke database
+require_once 'config/koneksi.php';
 
 // Cek autentikasi user
 if (!isset($_SESSION['user_id'])) {
@@ -15,7 +16,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $error = "";
 
 // Ambil data lowongan yang sesuai dengan ID dan milik user yang sedang login
-$query_select = "SELECT * FROM groups WHERE id = '$id' AND user_id = '$user_id'";
+$query_select = "SELECT * FROM study_groups WHERE id = '$id' AND user_id = '$user_id'";
 $result = mysqli_query($koneksi, $query_select);
 
 if (mysqli_num_rows($result) === 0) {
@@ -40,12 +41,12 @@ if (isset($_POST['submit'])) {
         $deskripsi_esc   = mysqli_real_escape_string($koneksi, $deskripsi);
         $kriteria_esc    = mysqli_real_escape_string($koneksi, $kriteria);
 
-        $query_update = "UPDATE groups SET 
+        $query_update = "UPDATE study_groups SET 
                             nama_matkul = '$nama_matkul_esc',
-                            kuota_dibutuhkan = '$kuota_esc',
+                            jumlah_anggota = '$kuota_esc',
                             deskripsi = '$deskripsi_esc',
-                            kriteria = '$kriteria_esc'
-                         WHERE id = '$id' AND user_id = '$user_id'";
+                            syarat_kriteria = '$kriteria_esc'
+                            WHERE id = '$id' AND user_id = '$user_id'";
 
         if (mysqli_query($koneksi, $query_update)) {
             echo "<script>alert('Lowongan berhasil diperbarui!'); window.location='index.php';</script>";
@@ -84,7 +85,7 @@ if (isset($_POST['submit'])) {
 
             <div class="mb-4">
                 <label class="block text-gray-700 font-medium mb-1 text-sm">Jumlah Orang yang Dicari (Kuota)</label>
-                <input type="number" name="kuota_dibutuhkan" min="1" value="<?= htmlspecialchars($data['kuota_dibutuhkan']); ?>" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
+                <input type="number" name="kuota_dibutuhkan" min="1" value="<?= htmlspecialchars($data['jumlah_anggota']); ?>" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
             </div>
 
             <div class="mb-4">
@@ -94,7 +95,7 @@ if (isset($_POST['submit'])) {
 
             <div class="mb-6">
                 <label class="block text-gray-700 font-medium mb-1 text-sm">Syarat / Kriteria Anggota</label>
-                <input type="text" name="kriteria" value="<?= htmlspecialchars($data['kriteria']); ?>" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
+                <input type="text" name="kriteria" value="<?= htmlspecialchars($data['syarat_kriteria']); ?>" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
             </div>
 
             <button type="submit" name="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 font-medium transition duration-200 shadow-sm">

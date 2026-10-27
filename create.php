@@ -1,8 +1,9 @@
 <?php
-// Memulai session dan menghubungkan ke database buatan Derryl
-require_once 'config/koneksi.php';
 
 session_start();
+
+// Memulai session dan menghubungkan ke database buatan Derryl
+require_once 'config/koneksi.php';
 
 // Cek apakah mahasiswa sudah login (session dari halaman login Panji)
 if (!isset($_SESSION['user_id'])) {
